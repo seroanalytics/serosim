@@ -44,9 +44,27 @@ Load necessary packages:
 ``` r
 ## Install and load serosim 
 devtools::install_github("AMenezes97/serosim")
+#> tidyselect (1.1.2 -> 1.2.0 ) [CRAN]
+#> stringi    (1.7.8 -> 1.7.12) [CRAN]
+#> cpp11      (0.4.2 -> 0.4.3 ) [CRAN]
+#> stringr    (1.4.0 -> 1.5.0 ) [CRAN]
+#> dplyr      (1.0.9 -> 1.1.1 ) [CRAN]
+#> tidyr      (1.2.0 -> 1.3.0 ) [CRAN]
+#> ggplot2    (3.4.1 -> 3.4.2 ) [CRAN]
+#> deSolve    (1.30  -> 1.35  ) [CRAN]
 #> 
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/private/var/folders/q8/2nt_5tqj7yj_rmmxlknjr2sm0000gr/T/RtmpJInDMV/remotesbf496837644a/AMenezes97-serosim-7507fc3/DESCRIPTION’ ... OK
+#>   There are binary versions available but the source versions are later:
+#>            binary source needs_compilation
+#> tidyselect  1.1.2  1.2.0             FALSE
+#> stringi     1.7.6 1.7.12              TRUE
+#> cpp11       0.4.2  0.4.3             FALSE
+#> stringr     1.4.0  1.5.0             FALSE
+#> dplyr       1.0.8  1.1.1              TRUE
+#> tidyr       1.2.0  1.3.0              TRUE
+#> ggplot2     3.3.5  3.4.2             FALSE
+#> deSolve      1.31   1.35              TRUE
+#> 
+#> * checking for file ‘/private/var/folders/59/lj4f0j3s07z67v647cr9wncc0000gn/T/RtmpvzxfpU/remotes80fa1e741d3d/AMenezes97-serosim-d4fe1af/DESCRIPTION’ ... OK
 #> * preparing ‘serosim’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
@@ -100,10 +118,10 @@ demography <- generate_pop_demography(N=100, times=times, prob_removal=0)
 summary(demography)
 #>        i              birth           removal        times       
 #>  Min.   :  1.00   Min.   :  1.00   Min.   :121   Min.   :  1.00  
-#>  1st Qu.: 25.75   1st Qu.: 33.25   1st Qu.:121   1st Qu.: 30.75  
-#>  Median : 50.50   Median : 53.00   Median :121   Median : 60.50  
-#>  Mean   : 50.50   Mean   : 55.59   Mean   :121   Mean   : 60.50  
-#>  3rd Qu.: 75.25   3rd Qu.: 80.25   3rd Qu.:121   3rd Qu.: 90.25  
+#>  1st Qu.: 25.75   1st Qu.: 39.50   1st Qu.:121   1st Qu.: 30.75  
+#>  Median : 50.50   Median : 60.50   Median :121   Median : 60.50  
+#>  Mean   : 50.50   Mean   : 61.55   Mean   :121   Mean   : 60.50  
+#>  3rd Qu.: 75.25   3rd Qu.: 87.25   3rd Qu.:121   3rd Qu.: 90.25  
 #>  Max.   :100.00   Max.   :119.00   Max.   :121   Max.   :120.00
 ```
 
@@ -339,6 +357,7 @@ simulation outputs.
 ``` r
 ## Plot biomarker kinetics and exposure histories for 10 individuals 
 plot_subset_individuals_history(res$biomarker_states, res$exposure_histories_long, subset=10, demography)
+#> Warning: Removed 6 rows containing missing values (`geom_line()`).
 ```
 
 ![](man/figures/README-unnamed-chunk-11-1.png)<!-- -->
@@ -392,14 +411,14 @@ plot_obs_biomarkers_one_sample(res$observed_biomarker_states)
 ## Note that the simulated kinetics parameters are also stored
 head(res$kinetics_parameters)
 #> # A tibble: 6 × 7
-#>       i     t     x     b name    value realized_value
-#>   <int> <dbl> <dbl> <dbl> <chr>   <dbl>          <dbl>
-#> 1     1    87     2     1 boost 4.01           4.01   
-#> 2     1    87     2     1 wane  0.00132        0.00132
-#> 3     2    93     1     1 boost 4.98           4.98   
-#> 4     2    93     1     1 wane  0.00546        0.00546
-#> 5     2    93     2     1 boost 3.54           3.54   
-#> 6     2    93     2     1 wane  0.00179        0.00179
+#>       i     t     x     b name     value realized_value
+#>   <int> <dbl> <dbl> <dbl> <chr>    <dbl>          <dbl>
+#> 1     1    98     2     1 boost 0.644          0.644   
+#> 2     1    98     2     1 wane  0.000975       0.000975
+#> 3     1   107     1     1 boost 4.06           4.06    
+#> 4     1   107     1     1 wane  0.00283        0.00283 
+#> 5     2   118     2     1 boost 1.82           1.82    
+#> 6     2   118     2     1 wane  0.000909       0.000909
 
 ## Combine plots as seen in paper 
 # library(cowplot)
