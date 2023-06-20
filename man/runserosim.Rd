@@ -16,9 +16,12 @@ runserosim(
   antibody_model,
   observation_model,
   draw_parameters,
-  exposure_histories_fixed = NULL,
+  immune_histories_fixed = NULL,
   VERBOSE = NULL,
   attempt_precomputation = TRUE,
+  parallel = FALSE,
+  n_cores = 4,
+  parallel_packages = NULL,
   ...
 )
 }
@@ -39,25 +42,36 @@ runserosim(
 
 \item{immunity_model}{A function determining the probability of an exposure leading to successful infection or vaccination for a given individual}
 
-\item{antibody_model}{A function determining the latent biomarker kinetics as a function of exposure history and within-host kinetics parameters (\code{model_pars})}
+\item{antibody_model}{A function determining the latent biomarker kinetics as a function of immune history and within-host kinetics parameters (\code{model_pars})}
 
 \item{observation_model}{A function generating observed biomarkers as a function of latent biomarkers and observation model parameters (\code{model_pars})}
 
 \item{draw_parameters}{A function to simulate parameters for the antibody model, immunity model and observation model from \code{model_pars}}
 
-\item{exposure_histories_fixed}{(optional) Defaults to NULL. Otherwise a 3D array indicating the exposure history (1 = exposed, 0 = not exposed) for each individual (dimension 1) at each time (dimension 2) for each exposure ID (dimension 3). Here, users can input pre-specified information if exposure histories are known for an individual}
+\item{immune_histories_fixed}{(optional) Defaults to NULL. Otherwise a 3D array indicating the immune history (1 = exposed, 0 = not exposed) for each individual (dimension 1) at each time (dimension 2) for each exposure ID (dimension 3). Here, users can input pre-specified information if immune histories are known for an individual}
 
 \item{VERBOSE}{(optional) Defaults to NULL. An integer specifying the frequency at which simulation progress updates are printed}
 
 \item{attempt_precomputation}{If TRUE, attempts to perform as much pre-computation as possible for the exposure model to speed up the main simulation code. If FALSE, skips this step, which is advised when the simulation is expected to be very fast anyway}
 
-\item{...}{Any additional arguments needed}
+\item{parallel}{If TRUE, attempts to run \emph{serosim} using parallel processes with the foreach and parallel packages. Defaults to FALSE}
+
+\item{n_cores}{The number of cores to use if running in parallel. Defaults to 4}
+
+\item{parallel_packages}{a character vector of R packages required for the models. Only needed if additional non-imported packages are required.}
+
+\item{...}{Any additional arguments needed for the models}
 }
 \value{
-a list containing the following elements: force of exposure, exposure probabilities, exposure histories, antibody states, observed antibody states, and kinetics parameters
+a list containing the following elements: force of exposure, exposure probabilities, immune histories, antibody states, observed antibody states, and kinetics parameters
 }
 \description{
-Simulates a serological survey using user-specified inputs. The user can specify multiple inputs controlling population demography, simulation time period, observation times for each individual, force of exposure, and various model functions describing the link between infections and observed biomarker quantities. See README for full details.
+Simulates a serological survey using user-specified inputs and models.
+}
+\details{
+The \code{runserosim} function is designed as a plug-and-play multi-level model representing the different stages of the data-generating process for serological data. The user can specify inputs controlling population demography, simulation time period, observation times for each individual, force of exposure, and various model functions describing the link between infections and observed biomarker quantities. See README for full details of the workflow.
+
+There are two optional flags to attempt speed ups with serosim: \code{attempt_precomputation} and \code{parallel}. \code{attempt_precomputation} will check how many interchangeable individuals there are and pre-compute exposure probabilities for these individuals if that would be quicker than solving for each individual separately. \code{parallel} uses the \code{foreach} package with \code{dopar} to run \emph{serosim} for blocks of individuals on a socket cluster. The number of cores is set with the \code{n_cores} argument. If any additional packages are needed for the model, then the \code{parallel_packages} argument should be set.
 }
 \examples{
 ## See package README.

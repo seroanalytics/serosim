@@ -32,13 +32,13 @@ test_that("Check that plot_exposure_force function works", {
 })
 
 
-test_that("Check that plot_exposure_histories function works", {
+test_that("Check that plot_immune_histories function works", {
   
   ## Load in example data 
-  data("example_exposure_histories")
+  data("example_immune_histories")
   
   ## Expect that plotting function works properly with no errors
-  expect_message(plot_exposure_histories(example_exposure_histories), regexp=NA)
+  expect_message(plot_immune_histories(example_immune_histories), regexp=NA)
 })
 
 
@@ -48,7 +48,7 @@ test_that("Check that plot_biomarker_quantity function works", {
   data("example_biomarker_states")
   
   ## Expect that plotting function works properly with no errors
-  expect_message(plot_biomarker_quantity(example_biomarker_states), regexp=NA)
+  expect_no_error(plot_biomarker_quantity(example_biomarker_states))
 })
 
 
@@ -58,7 +58,7 @@ test_that("Check that plot_obs_biomarkers_one_sample function works", {
   data("example_observed_biomarker_states")
   
   ## Expect that plotting function works properly with no errors
-  expect_message(plot_obs_biomarkers_one_sample(example_observed_biomarker_states), regexp=NA)
+  expect_no_error(plot_obs_biomarkers_one_sample(example_observed_biomarker_states))
 })
 
 
@@ -68,10 +68,10 @@ test_that("Check that plot_obs_biomarkers_paired_sample function works", {
   data("example_biomarker_states")
   
   example_biomarker_states$observed <- example_biomarker_states$value
-  example_biomarker_states_subset <- example_biomarker_states %>% filter(t %in% c(1,120))
+  example_biomarker_states_subset <- example_biomarker_states %>% dplyr::filter(t %in% c(1,120))
   
   ## Expect that plotting function works properly with no errors
-  expect_message(plot_obs_biomarkers_paired_sample(example_biomarker_states_subset), regexp=NA)
+  expect_no_error(plot_obs_biomarkers_paired_sample(example_biomarker_states_subset))
 })
 
 
@@ -79,11 +79,11 @@ test_that("Check that plot_subset_individuals_history function works", {
   
   ## Load in example data 
   data("example_biomarker_states")
-  data("example_exposure_histories")
+  data("example_immune_histories")
   data("example_demography")
   
   ## Expect that plotting function works properly with no errors
-  expect_message(plot_subset_individuals_history(example_biomarker_states,example_exposure_histories,3,example_demography), regexp=NA)
+  expect_message(plot_subset_individuals_history(example_biomarker_states,example_immune_histories,3,example_demography), regexp=NA)
 })
 
 

@@ -2,34 +2,37 @@
 % Please edit documentation in R/generate_plots.R
 \name{plot_subset_individuals_history}
 \alias{plot_subset_individuals_history}
-\title{Plot biomarker states and exposure histories for a subset of individuals}
+\title{Plot biomarker states and immune histories for a subset of individuals}
 \usage{
 plot_subset_individuals_history(
   biomarker_states,
-  exposure_histories,
+  immune_histories,
   subset,
   demography,
-  removal = FALSE
+  removal = FALSE,
+  heatmap = FALSE
 )
 }
 \arguments{
 \item{biomarker_states}{The reshaped data set containing biomarker quantities for individuals at all time steps for each biomarker}
 
-\item{exposure_histories}{The reshaped data set containing exposure history for individuals at all time steps for each exposure event}
+\item{immune_histories}{The reshaped data set containing immune history for individuals at all time steps for each exposure event}
 
 \item{subset}{The number of individuals you want to plot}
 
 \item{demography}{Tibble of removal time for each individual}
 
 \item{removal}{Set to TRUE if individuals are removed during the simulation and removal time is present in demogrpahy; defaults to FALSE}
+
+\item{heatmap}{if TRUE, returns a heatmap of all biomarker states over time. Overwise plots each biomarker as a line.}
 }
 \value{
 A plot of  biomarker states and exposure histories for a subset of individuals is returned
 }
 \description{
-Plot biomarker states and exposure histories for a subset of individuals
+Plot biomarker states and immune histories for a subset of individuals
 }
 \examples{
-plot_subset_individuals_history(example_biomarker_states,example_exposure_histories,
+plot_subset_individuals_history(example_biomarker_states,example_immune_histories,
 3,example_demography)
 }

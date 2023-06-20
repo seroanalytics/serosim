@@ -8,7 +8,7 @@ antibody_model_monophasic(
   i,
   t1,
   b,
-  exposure_histories,
+  immune_histories,
   biomarker_states,
   kinetics_parameters,
   biomarker_map,
@@ -16,13 +16,13 @@ antibody_model_monophasic(
 )
 }
 \arguments{
-\item{i}{Individual}
+\item{i}{individual}
 
 \item{t1}{time}
 
 \item{b}{biomarker}
 
-\item{exposure_histories}{An array of exposure histories across all individuals, time steps and exposure IDs}
+\item{immune_histories}{An array of immune histories across all individuals, time steps and exposure IDs}
 
 \item{biomarker_states}{An array of biomarker states (biomarker quantities) across all individuals, time steps and biomarker IDs}
 
@@ -36,11 +36,23 @@ antibody_model_monophasic(
 A biomarker quantity is returned
 }
 \description{
-This monophasic antibody boosting-waning model model assumes that for each exposure there is a boost and boost waning parameter
+This monophasic antibody boosting-waning model assumes that for each exposure there is a boost and waning parameter
 }
 \examples{
 tmp_pars <- list()
-tmp_pars[[1]] <- draw_parameters_fixed_fx(1,1,1,1,NULL, NULL, example_model_pars_numeric)
-antibody_model_monophasic(1,1,1,example_exposure_histories_wide, example_biomarker_states_wide, 
+tmp_pars[[1]] <- draw_parameters_fixed_fx(1,1,1,NULL, NULL, example_model_pars_numeric)
+antibody_model_monophasic(1,1,1,example_immune_histories_wide, example_biomarker_states_wide, 
 tmp_pars, example_biomarker_map_numeric)
 }
+\seealso{
+antibody_model_monophasic_cpp
+
+Other antibody_models: 
+\code{\link{antibody_model_biphasic_cpp}()},
+\code{\link{antibody_model_biphasic_cross_reactivity}()},
+\code{\link{antibody_model_biphasic}()},
+\code{\link{antibody_model_monophasic_cpp}()},
+\code{\link{antibody_model_monophasic_cross_reactivity}()},
+\code{\link{antibody_model_typhoid}()}
+}
+\concept{antibody_models}

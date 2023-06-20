@@ -1,8 +1,0 @@
-pandoc: 2.19.2
-pkgdown: 1.6.1.9001
-pkgdown_sha: 5bd377e7cb6d268565018b73e4bb99d2788182ed
-articles:
-  case_study_1_measles: case_study_1_measles.html
-  case_study_2_diphtheria_pertussis: case_study_2_diphtheria_pertussis.html
-last_built: 2023-04-06T10:11Z
-
