@@ -6,10 +6,10 @@ output: github_document
 <img src='man/figures/logo.png' align="right" height="100" />
 
   <!-- badges: start -->
-[![R-CMD-check](https://github.com/AMenezes97/serosim/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/AMenezes97/serosim/actions/workflows/check-standard.yaml)
-  [![CodeFactor](https://www.codefactor.io/repository/github/amenezes97/serosim/badge)](https://www.codefactor.io/repository/github/amenezes97/serosim)
+[![R-CMD-check](https://github.com/seroanalytics/serosim/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/seroanalytics/serosim/actions/workflows/check-standard.yaml)
+  [![CodeFactor](https://www.codefactor.io/repository/github/seroanalytics/serosim/badge)](https://www.codefactor.io/repository/github/seroanalytics/serosim)
   <!-- badges: end -->
-[![test-coverage](https://github.com/AMenezes97/serosim/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/AMenezes97/serosim/actions/workflows/test-coverage.yaml)
+[![test-coverage](https://github.com/seroanalytics/serosim/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/seroanalytics/serosim/actions/workflows/test-coverage.yaml)
 
 ```{r, echo=FALSE}
 knitr::opts_chunk$set(
