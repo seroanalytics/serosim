@@ -58,7 +58,18 @@ Load necessary packages:
 
 ``` r
 ## Install and load serosim 
-devtools::install_github("AMenezes97/serosim")
+devtools::install_github("seroanalytics/serosim")
+#> 
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/33/9_2zcl8d6nl5jjdl97fpmr080000gn/T/RtmpZ4WppI/remotesaf13f6bd4c8/seroanalytics-serosim-8957343/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/33/9_2zcl8d6nl5jjdl97fpmr080000gn/T/RtmpZ4WppI/remotesaf13f6bd4c8/seroanalytics-serosim-8957343/DESCRIPTION’
+#>   ─  preparing ‘serosim’:
+#>      checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  cleaning src
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘serosim_0.0.0.9000.tar.gz’
+#>      
+#> 
 library(serosim)
 
 ## Load additional packages required 
@@ -214,7 +225,7 @@ simulation outputs.
 ``` r
 ## Plot biomarker kinetics and immune histories for 10 individuals 
 plot_subset_individuals_history(res$biomarker_states, res$immune_histories_long, subset=10, demography)
-#> Warning: Removed 30 rows containing missing values (`geom_line()`).
+#> Warning: Removed 86 rows containing missing values (`geom_line()`).
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
