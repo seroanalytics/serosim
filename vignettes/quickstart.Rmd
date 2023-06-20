@@ -230,9 +230,10 @@ There are no optional arguments needed for this simulation.
 
 # 1.9 Run Simulation 
 This is the core simulation where all simulation settings, models and parameters 
-are specified within the main simulation function. Run time for this step varies 
+are specified within the main simulation function. The run time for this step varies 
 depending on the number of individuals and the complexities of the specified models. 
-There is a built in pre-computation step within _runserosim_ where the simulation attempts to perform as much pre-computation as possible for the exposure model to speed up the main simulation code. Users can turn off this pre-computation by setting pre-computation to FALSE within _runserosim_.
+
+One way to speed up `runserosim` is to use the `attempt_precomputation` flag. If set to true, `runserosim` attempts to group interchangeable individuals in the simulation, and vectorizes and pre-computes as many of the model functions as possible. This can lead to considerable speed ups, but is only usable for models with minimal dependency on intermediate states (for example, it will not work if exposure probability is conditional on a demography variable which changes over time). In any case, `serosim` will detect this automatically, and will only use the precomputed values if it a) provides a tangible speed up and b) does not introduce errors into the model. It is also possible to use parallelization with the `parallel` and `foreach` package within `runserosim` by setting the `parallel` argument to true and specifying the desired number of cores.
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 ## Run the core simulation and save outputs in "res"
 res<- runserosim(
