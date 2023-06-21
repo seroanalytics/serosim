@@ -28,7 +28,7 @@ the *runserosim* function in the order outlined in the methods section
 of the paper. We then run the simulation and examine its outputs.
 
 In the *vignettes* folder, you can find a more detailed walk through of
-this simple README simulation titled *Extended_README.Rmd*.
+this simple README simulation titled *quickstart.Rmd*.
 
 There are three additional complex vignettes/case studies in the
 *vignettes* folder.
@@ -61,10 +61,10 @@ Load necessary packages:
 devtools::install_github("seroanalytics/serosim")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>      checking for file ‘/private/var/folders/33/9_2zcl8d6nl5jjdl97fpmr080000gn/T/RtmpMVLSZM/remotesbe877c917f7/seroanalytics-serosim-cac1ae7/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/33/9_2zcl8d6nl5jjdl97fpmr080000gn/T/RtmpMVLSZM/remotesbe877c917f7/seroanalytics-serosim-cac1ae7/DESCRIPTION’
+#>      checking for file ‘/private/var/folders/33/9_2zcl8d6nl5jjdl97fpmr080000gn/T/RtmpOtZbO8/remotes231339f3cb87/seroanalytics-serosim-ee073f8/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/33/9_2zcl8d6nl5jjdl97fpmr080000gn/T/RtmpOtZbO8/remotes231339f3cb87/seroanalytics-serosim-ee073f8/DESCRIPTION’
 #>   ─  preparing ‘serosim’:
 #>      checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-#> ─  cleaning src
+#>   ─  cleaning src
 #>   ─  checking for LF line-endings in source and make files and shell scripts
 #>   ─  checking for empty or unneeded directories
 #>   ─  building ‘serosim_0.0.0.9000.tar.gz’
@@ -225,7 +225,7 @@ simulation outputs.
 ``` r
 ## Plot biomarker kinetics and immune histories for 10 individuals 
 plot_subset_individuals_history(res$biomarker_states, res$immune_histories_long, subset=10, demography)
-#> Warning: Removed 26 rows containing missing values (`geom_line()`).
+#> Warning: Removed 31 rows containing missing values (`geom_line()`).
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->

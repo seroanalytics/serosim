@@ -34,7 +34,7 @@ required arguments and models for the _runserosim_ function in the order
 outlined in the methods section of the paper. We then run the simulation and 
 examine its outputs.
 
-In the _vignettes_ folder, you can find a more detailed walk through of this simple README simulation titled _Extended_README.Rmd_. 
+In the _vignettes_ folder, you can find a more detailed walk through of this simple README simulation titled _quickstart.Rmd_. 
 
 There are three additional complex vignettes/case studies in the _vignettes_ folder. 
 
