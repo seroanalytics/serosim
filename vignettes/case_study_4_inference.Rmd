@@ -341,8 +341,7 @@ pred_rural <- predict(b_rural,new_dat,type="response",se=TRUE)
 attack_est <- function(pos_1, # positive at age i
                        pos_2 # positive at age i+1
 ){
-  # Note: need to account for people who have already waned...
-  # Calculate susceptibility at age i, accounting for waning immunity
+  # Calculate remaining susceptibility at age i
   susceptible_1 <- (1-pos_1)
   
   # Calculate proportion of susceptible group infected
@@ -352,7 +351,7 @@ attack_est <- function(pos_1, # positive at age i
 }
 
 
-# Calculate discrete derivative:
+# Calculate attack rates:
 vec1 <- head(pred_urban$fit,-1) # drop last entry
 vec2 <- tail(pred_urban$fit,-1) # drop first entry
 deriv_val_urban <- attack_est(vec1,vec2)
