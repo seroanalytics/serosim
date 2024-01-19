@@ -309,6 +309,74 @@ We can see that although the fits to the Rural dataset are fairly accurate, the 
 ## 3.4 Summary
 In this section, we showed how FOI estimates from a simple catalytic model fitted to age-stratified seroprevalence data may be inaccurate or even biased if we fail to account for key mechanisms of the data-generating process (namely antibody waning in this case). An iterative approach of comparing estimates from the fitted model to ground truth from the simulation can be used to guide development of minimum acceptable inference models. From this analysis, we might consider refining the serocatalytic model in `serofoi` to include seroreversion, or use an alternative tool (e.g., the [`Rsero`](https://github.com/nathoze/Rsero) R-package which also fits serocatalytic models using `rstan`, but allows for the possibility of seroreversion).
 
+## 3.5 Comparison with non-mechanistic GAM-based approach
+
+The [scam package](https://cran.r-project.org/web/packages/scam/index.html) allows logistic generalized additive models (GAMs) that are constrained to be increasing. If we fit this model to seropositivity data, then calculate the discretised annual risk of infection, it is equivalent to modelling transmission via time-varying attack rate in the absence of waning. This non-parameteric implementation is faster than `serofoi`, albeit at the price of being unable to define specific mechanisms (such as a single historical outbreak). An implementation using the above `serodat` object is shown below:
+
+```{r}
+library(scam)
+
+## Clean the data into form required
+seropos_cutoff = 1.5
+summary <- serodat %>% dplyr::mutate(age = t - birth) %>% 
+  dplyr::mutate(seropos=observed >= seropos_cutoff)
+
+summary_urban <- summary |> filter(location=="Urban")
+dat_urban <- data.frame(x=summary_urban$age,y=summary_urban$seropos)
+
+summary_rural <- summary |> filter(location=="Rural")
+dat_rural <- data.frame(x=summary_rural$age,y=summary_rural$seropos)
+
+# Fit increasing curve:
+b_urban <- scam(y~s(x,k=15,bs="mpi"),family=binomial(link="logit"),data=dat_urban)
+b_rural <- scam(y~s(x,k=15,bs="mpi"),family=binomial(link="logit"),data=dat_rural)
+
+# Generate prediction
+age_range <- 1:max(dat_rural$x)
+new_dat <- data.frame(x=age_range)
+pred_urban <- predict(b_urban,new_dat,type="response",se=TRUE)
+pred_rural <- predict(b_rural,new_dat,type="response",se=TRUE)
+
+# Calculate infection risk over a year, adjusting for waning
+attack_est <- function(pos_1, # positive at age i
+                       pos_2 # positive at age i+1
+){
+  # Calculate remaining susceptibility at age i
+  susceptible_1 <- (1-pos_1)
+  
+  # Calculate proportion of susceptible group infected
+  inf_1 <- (pos_2-pos_1)/susceptible_1
+  
+  return(inf_1)
+}
+
+
+# Calculate attack rates:
+vec1 <- head(pred_urban$fit,-1) # drop last entry
+vec2 <- tail(pred_urban$fit,-1) # drop first entry
+deriv_val_urban <- attack_est(vec1,vec2)
+
+vec1 <- head(pred_rural$fit,-1) # drop last entry
+vec2 <- tail(pred_rural$fit,-1) # drop first entry
+deriv_val_rural <- attack_est(vec1,vec2)
+
+# Plot results
+par(mfcol=c(2,2),mgp=c(2.5,0.7,0),mar = c(3.5,3.5,1,1))
+
+plot(x,y,xlab="age",ylab="seropositive",main="Rural")
+lines(age_range,pred_rural$fit,col=2,lwd=2) # monotone fit
+
+plot(rev(tail(age_range,-1)),deriv_val_rural,col=2,type="l",lwd=2,xlab="years",ylab="attack rate",ylim=c(0,0.1))
+lines(1-exp(-foe_pars[,,1][2,]),col="darkred")
+
+plot(x,y,xlab="age",ylab="seropositive",main="Urban")
+lines(age_range,pred_urban$fit,col=2,lwd=2) # monotone fit
+
+plot(rev(tail(age_range,-1)),deriv_val_urban,col=2,type="l",lwd=2,xlab="years",ylab="attack rate",ylim=c(0,0.1))
+lines(1-exp(-foe_pars[,,1][1,]),col="darkred")
+
+```
+
 # 4.0 Estimating exposure histories, attack rates and antibody kinetics using `serosolver`
 Our next inference method uses the [`serosolver`](https://github.com/seroanalytics/serosolver) package to estimate not only which individuals have been exposed, but also _when_ each exposure event occurred. Like `serofoi`, `serosolver` uses a Markov chain Monte Carlo algorithm (MCMC) (in this case, a custom MCMC algorithm rather than `rstan`) to estimate model parameters conditional on the serological data. This approach differs in three ways from the serocatalytic model:
 
