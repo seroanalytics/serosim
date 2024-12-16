@@ -22,7 +22,6 @@ Depends:
     R (>= 3.5.0)
 Imports: 
     data.table,
-    deSolve,
     dplyr,
     ggplot2,
     reshape2,
