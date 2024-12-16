@@ -160,7 +160,6 @@ exposure_model_dem_mod <- function(i, t, x, g, foe_pars, demography, dem_mod, t_
 #' @param time_res Time steps to solve the ODEs. Set lower for higher accuracy.
 #' @param ... Additional arguments
 #' @return Probability of exposure for the requested time step
-#' @importFrom deSolve ode
 #' @export
 #' @examples 
 #' times <- seq(0,365,by=1)
